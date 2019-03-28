@@ -1,0 +1,96 @@
+import json
+import psutil as pu
+import os
+import socket
+import platform
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(('8.8.8.8', 22))
+ip = s.getsockname()[0]
+s.close()
+result = {}
+myname=socket.getfqdn(socket.gethostname())
+mem = pu.virtual_memory()
+plat=platform.system()
+arch=platform.architecture()
+disk_usage="%.2f%%"%pu.disk_usage('/').percent
+result["PC-Name"]=myname
+result["IP Address"]=ip
+result["Memory Usage"] = "%.2f%%"%mem.percent
+result["CPU Usage"] = "%.2f%%"%pu.cpu_percent(interval = 2)
+result["Platform"]=plat
+result["Architecture"]=arch
+result["Disk Usage"]=disk_usage
+PROCNAME1 = "zaero"
+L1=[]
+for proc1 in pu.process_iter():
+    L1.append(proc1.name())
+if PROCNAME1 in L1:
+    for proc1 in pu.process_iter():
+        if proc1.name()==PROCNAME1:
+            p1=pu.Process(proc1.pid)
+            result["Software Zaero"]=p1.status()
+else:
+    result["Software Zaero"]="Not running"
+
+PROCNAME2 = "zeus"
+L2=[]
+for proc2 in pu.process_iter():
+    L2.append(proc2.name())
+if PROCNAME2 in L2:
+    for proc2 in pu.process_iter():
+        if proc2.name()==PROCNAME2:
+            p2=pu.Process(proc2.pid)
+            result["Software Zeus"]=p2.status()
+else:
+    result["Software Zeus"]="Not running"
+
+PROCNAME3 = "zulus"
+L3=[]
+for proc3 in pu.process_iter():
+    L3.append(proc3.name())
+if PROCNAME3 in L3:
+    for proc3 in pu.process_iter():
+        if proc3.name()==PROCNAME3:
+            p3=pu.Process(proc3.pid)
+            result["Software Zulus"]=p3.status()
+else:
+    result["Software Zulus"]="Not running"
+
+PROCNAME4 = "zonair"
+L4=[]
+for proc4 in pu.process_iter():
+    L4.append(proc4.name())
+if PROCNAME4 in L4:
+    for proc4 in pu.process_iter():
+        if proc4.name()==PROCNAME4:
+            p4=pu.Process(proc4.pid)
+            result["Software Zonair"]=p4.status()
+else:
+    result["Software Zonair"]="Not running"
+
+PROCNAME5 = "fun3d"
+L5=[]
+for proc5 in pu.process_iter():
+    L5.append(proc5.name())
+if PROCNAME5 in L5:
+    for proc5 in pu.process_iter():
+        if proc5.name()==PROCNAME5:
+            p5=pu.Process(proc5.pid)
+            result["Software Fun3d"]=p5.status()
+else:
+    result["Software Fun3d"]="Not running"
+
+PROCNAME6 = "nodet"
+L6=[]
+for proc6 in pu.process_iter():
+    L6.append(proc6.name())
+if PROCNAME6 in L6:
+    for proc6 in pu.process_iter():
+        if proc6.name()==PROCNAME6:
+            p6=pu.Process(proc6.pid)
+            result["Software Nodet"]=p6.status()
+else:
+    result["Software Nodet"]="Not running"
+data = json.dumps(result)
+print(data)
